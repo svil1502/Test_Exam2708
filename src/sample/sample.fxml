@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <MenuBar prefHeight="29.0" prefWidth="800.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Label layoutX="10.0" layoutY="76.0" text="Предмет" />
+      <Label layoutX="10.0" layoutY="115.0" text="Количество вопросов" />
+      <Label layoutX="27.0" layoutY="148.0" text="Легких" />
+      <Label layoutX="22.0" layoutY="175.0" text="Средних" />
+      <TextField layoutX="165.0" layoutY="71.0" />
+      <TextField layoutX="165.0" layoutY="103.0" />
+      <TextField layoutX="165.0" layoutY="135.0" />
+      <TextField layoutX="165.0" layoutY="170.0" />
+      <TableView fx:id="tableVopros" layoutX="350.0" layoutY="57.0" prefHeight="200.0" prefWidth="425.0">
+        <columns>
+          <TableColumn fx:id="column_id" prefWidth="100.0" text="№ вопроса" />
+          <TableColumn fx:id="column_textv" prefWidth="324.0" text="Текст вопроса" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tableOtvet" layoutX="350.0" layoutY="263.0" prefHeight="115.0" prefWidth="425.0">
+        <columns>
+          <TableColumn fx:id="column_id_o" prefWidth="75.0" text="№ ответа" />
+          <TableColumn fx:id="column_text" prefWidth="347.0" text="Текст ответа" />
+        </columns>
+      </TableView>
+      <TextField layoutX="165.0" layoutY="208.0" />
+      <Label layoutX="27.0" layoutY="208.0" text="Сложных" />
+      <Button fx:id="btnLoad" layoutX="181.0" layoutY="249.0" mnemonicParsing="false" onAction="#loadDataFromDatabase" prefHeight="27.0" prefWidth="136.0" text="Выбрать" />
+   </children>
+</AnchorPane>
