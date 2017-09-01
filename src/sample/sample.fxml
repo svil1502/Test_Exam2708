@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <MenuBar prefHeight="29.0" prefWidth="800.0">
+      <MenuBar prefHeight="39.0" prefWidth="800.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -45,10 +45,11 @@
           <TableColumn fx:id="column_textv" prefWidth="324.0" text="Текст вопроса" />
         </columns>
       </TableView>
-      <TableView fx:id="tableOtvet" layoutX="350.0" layoutY="263.0" prefHeight="115.0" prefWidth="425.0">
+      <TableView fx:id="tableOtvet" layoutX="350.0" layoutY="287.0" prefHeight="92.0" prefWidth="425.0">
         <columns>
-          <TableColumn fx:id="column_id_o" prefWidth="75.0" text="№ ответа" />
-          <TableColumn fx:id="column_text" prefWidth="347.0" text="Текст ответа" />
+            <TableColumn fx:id="column_id_v" prefWidth="82.0" text="№ вопроса" />
+          <TableColumn fx:id="column_id_o" prefWidth="96.0" text="№ ответа" />
+          <TableColumn fx:id="column_text" prefWidth="383.0" text="Текст ответа" />
         </columns>
       </TableView>
       <TextField layoutX="165.0" layoutY="208.0" />

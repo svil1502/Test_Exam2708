@@ -10,79 +10,66 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
-
-
-
+import java.util.*;
 
 
 
 
 //public class Controller implements Initializable {
-    public class Controller  {
-    // public LoginModel LoginModel = new LoginModel();
+    public class Controller {
 
-    //   @FXML
-    //   private Label isConnected;
+    //первая таблица
+    @FXML
+//    private TableView<Viborka> tableVopros;
+    TableView<Viborka> tableVopros;
 
     @FXML
-    private TableView<Viborka> tableVopros;
+    TableColumn<Viborka, String> column_id;
 
     @FXML
-    private TableColumn<Viborka, String> column_id;
+    TableColumn<Viborka, String> column_textv;
+
+    // вторая таблица
+    @FXML
+    TableView<ViborkaOtvet> tableOtvet;
 
     @FXML
-    private TableColumn<Viborka, String> column_textv;
-
-
-    @FXML
-    private TableView<Viborka> tableOtvet;
+    TableColumn<ViborkaOtvet, String> column_id_o;
 
     @FXML
-    private TableColumn<Viborka, String> column_id_o;
+    TableColumn<ViborkaOtvet, String> column_text;
 
     @FXML
-    private TableColumn<Viborka, String> column_text;
+    TableColumn<ViborkaOtvet, String> column_id_v;
 
-
-
+    private ObservableList<ViborkaOtvet> id_v = FXCollections.observableArrayList();
+    private ObservableList<ViborkaOtvet> id_o = FXCollections.observableArrayList();
+    private ObservableList<ViborkaOtvet> text = FXCollections.observableArrayList();
 
 
     @FXML
     private Button btnLoad;
-
     private ObservableList<Viborka> data;
-    private ObservableList<Viborka> data2;
-
     private FirebirdConnection dc;
-    private FirebirdConnection dc2;
-
-/*
-    @Override
-
-    public void initialize(URL location, ResourceBundle resources) {
-
-        if (LoginModel.isDbConnected()) {
-            isConnected.setText("Connected");
-        } else {
-            isConnected.setText("Not Connected");
+    private ObservableList<ViborkaOtvet> datao;
+    private FirebirdConnection dco;
 
 
-        }
-    }
-*/
+
 
     @FXML
     private void loadDataFromDatabase(ActionEvent event) {
         try {
             Connection conn = dc.Connector();
             data = FXCollections.observableArrayList();
+
             // Execute query and store result in a resultset
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM vopros");
             while (rs.next()) {
@@ -94,37 +81,79 @@ import java.util.ResourceBundle;
             System.err.println("Error" + ex);
         }
 
-        try {
-            Connection conn2 = dc2.Connector();
-            data2 = FXCollections.observableArrayList();
-            // Execute query and store result in a resultset
-            ResultSet rs2 = conn2.createStatement().executeQuery("SELECT * FROM otvet");
-            while (rs2.next()) {
-                //get string from db,whichever way
-                data2.add(new Viborka(rs2.getString(4), rs2.getString(6)));
-            }
 
-        } catch (SQLException ex) {
-            System.err.println("Error" + ex);
-        }
+
 
         //Set cell value factory to tableview.
         //NB.PropertyValue Factory must be the same with the one set in model class.
 
         column_id.setCellValueFactory(new PropertyValueFactory<>("idv"));
         column_textv.setCellValueFactory(new PropertyValueFactory<>("textv"));
-
-        column_id_o.setCellValueFactory(new PropertyValueFactory<>("id_o"));
-        column_text.setCellValueFactory(new PropertyValueFactory<>("text"));
+    //    column_id_o.setCellValueFactory(new PropertyValueFactory<>("id_o"));
+      //  column_text.setCellValueFactory(new PropertyValueFactory<>("text"));
 
         tableVopros.setItems(null);
         tableVopros.setItems(data);
-
-        tableOtvet.setItems(null);
-        tableOtvet.setItems(data2);
+    //    tableOtvet.setItems(null);
+      //  tableOtvet.setItems(datao);
 
     }
 
 
 
+
+        @FXML
+        private void clickCatalogList(MouseEvent event) {
+            try {
+
+                Viborka selGroups = (Viborka)  tableVopros.getSelectionModel().getSelectedItem();
+                showListChildrenCatalog(selGroups.getidv()); //это вызов нужной функции по заполнению и передача параметров в нее
+
+
+            } catch (Exception e) {
+
+            }
+
+            tableOtvet.setItems(id_v); // дб внешний ключ?
+        }
+
+
+//заполняем вторую таблицу
+   // private void showListChildrenCatalog(String thCatalog) { //Это сама функция заполнения таблицы.
+
+private void showListChildrenCatalog(String thCatalog) {
+    try {
+
+        Connection conn = dco.Connector();
+        datao = FXCollections.observableArrayList();
+        ResultSet rs = conn.createStatement().executeQuery("SELECT ID_V, ID_O, TEXT FROM otvet where ID_V='" + thCatalog + "'");
+        while (rs.next()) {
+            //get string from db,whichever way
+            datao.add(new ViborkaOtvet(rs.getString(2), rs.getString(4), rs.getString(6)));
+        }
+
+    } catch (SQLException ex) {
+        System.err.println("Error" + ex);
+    }
+    column_id_v.setCellValueFactory(new PropertyValueFactory<>("id_v"));
+
+    column_id_o.setCellValueFactory(new PropertyValueFactory<>("id_o"));
+    column_text.setCellValueFactory(new PropertyValueFactory<>("text"));
+
+    tableOtvet.setItems(null);
+    tableOtvet.setItems(datao);
+
+
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
