@@ -26,6 +26,7 @@ import java.util.*;
     public class Controller {
 
     //первая таблица
+    //
     @FXML
 //    private TableView<Viborka> tableVopros;
     TableView<Viborka> tableVopros;
